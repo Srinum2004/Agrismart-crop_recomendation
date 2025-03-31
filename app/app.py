@@ -11,9 +11,9 @@ app = Flask(__name__)
 # encoder = joblib.load(r'C:\Users\HP\OneDrive\Desktop\6th sem clg\SSP Project\Crop recomendation system\Notebook\encoder.pkl')
 
 # Load the model and preprocessing objects
-model = joblib.load(r'C:\Users\HP\OneDrive\Desktop\6th sem clg\SSP Project\Crop recomendation system\models\crop_model_nav.pkl')
-scaler = joblib.load(r'C:\Users\HP\OneDrive\Desktop\6th sem clg\SSP Project\Crop recomendation system\models\scaler_nav.pkl')
-encoder = joblib.load(r'C:\Users\HP\OneDrive\Desktop\6th sem clg\SSP Project\Crop recomendation system\models\encoder_nav.pkl')
+model = joblib.load(r'models\crop_model_nav.pkl')
+scaler = joblib.load(r'models\scaler_nav.pkl')
+encoder = joblib.load(r'models\encoder_nav.pkl')
 
 @app.route('/')
 def home():
