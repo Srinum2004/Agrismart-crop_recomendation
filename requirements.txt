@@ -1,0 +1,9 @@
+numpy
+pandas
+scikit-learn
+matplotlib
+seaborn
+joblib
+Flask
+gunicorn  # For production deployment
+python-dotenv # For environment variables

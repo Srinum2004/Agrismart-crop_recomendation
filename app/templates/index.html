@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriSmart - Crop Recommendation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4CAF50;
+            --secondary: #388E3C;
+            --light: #F1F8E9;
+            --dark: #1B5E20;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        header img {
+            width: 80px;
+            margin-bottom: 15px;
+        }
+        
+        h1 {
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .tagline {
+            color: var(--secondary);
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+        
+        .form-container {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--dark);
+            font-weight: 500;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+        }
+        
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        button:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        #result {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 18px;
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        .success {
+            background: var(--light);
+            color: var(--dark);
+            border-left: 5px solid var(--primary);
+        }
+        
+        .error {
+            background: #FFEBEE;
+            color: #C62828;
+            border-left: 5px solid #F44336;
+        }
+        
+        .crop-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin: 15px auto;
+            display: block;
+            border: 3px solid var(--primary);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="https://cdn-icons-png.flaticon.com/512/2972/2972035.png" alt="Farm Icon">
+            <h1>AgriSmart Crop Advisor</h1>
+            <p class="tagline">Get AI-powered crop recommendations for your farmland</p>
+        </header>
+        
+        <div class="form-container">
+            <form id="cropForm">
+                <div class="form-group">
+                    <label for="N">Nitrogen (N) content in soil (ppm):</label>
+                    <input type="number" id="N" name="N" step="0.1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="P">Phosphorus (P) content in soil (ppm):</label>
+                    <input type="number" id="P" name="P" step="0.1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="K">Potassium (K) content in soil (ppm):</label>
+                    <input type="number" id="K" name="K" step="0.1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="temperature">Temperature (°C):</label>
+                    <input type="number" id="temperature" name="temperature" step="0.1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="humidity">Humidity (%):</label>
+                    <input type="number" id="humidity" name="humidity" step="0.1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="ph">Soil pH (0-14):</label>
+                    <input type="number" id="ph" name="ph" min="0" max="14" step="0.1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="rainfall">Rainfall (mm):</label>
+                    <input type="number" id="rainfall" name="rainfall" step="0.1" required>
+                </div>
+                
+                <button type="submit">Get Crop Recommendation</button>
+            </form>
+            
+            <div id="result"></div>
+        </div>
+        
+        <footer>
+            <p>© 2023 AgriSmart | Helping farmers make data-driven decisions</p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById("cropForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                N: parseFloat(document.getElementById("N").value),
+                P: parseFloat(document.getElementById("P").value),
+                K: parseFloat(document.getElementById("K").value),
+                temperature: parseFloat(document.getElementById("temperature").value),
+                humidity: parseFloat(document.getElementById("humidity").value),
+                ph: parseFloat(document.getElementById("ph").value),
+                rainfall: parseFloat(document.getElementById("rainfall").value)
+            };
+
+            const resultDiv = document.getElementById("result");
+            resultDiv.style.display = "none"; // Hide previous result
+
+            try {
+                const response = await fetch("/predict", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(formData),
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    resultDiv.className = "error";
+                    resultDiv.innerHTML = `<strong>Error:</strong> ${data.error}`;
+                } else {
+                    resultDiv.className = "success";
+                    // Add a generic crop image (in a real app, you'd use crop-specific images)
+                    resultDiv.innerHTML = `
+                        <img src="https://cdn-icons-png.flaticon.com/512/2909/2909490.png" class="crop-image" alt="Crop">
+                        <h3>Recommended Crop</h3>
+                        <p style="font-size: 24px; font-weight: bold; color: var(--dark);">${data.crop.toUpperCase()}</p>
+                        <p>This crop is ideal for your soil and climate conditions.</p>
+                    `;
+                }
+                resultDiv.style.display = "block";
+            } catch (error) {
+                resultDiv.className = "error";
+                resultDiv.innerHTML = `<strong>Network Error:</strong> Could not connect to the server.`;
+                resultDiv.style.display = "block";
+            }
+        });
+    </script>
+</body>
+</html>
